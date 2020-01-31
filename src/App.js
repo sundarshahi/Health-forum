@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, Fragment } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Navbar from './components/Navbar';
+import AppRouter from './components/AppRouter';
+
+class App extends Component {
+  render() {
+    const isNotAuthPath = this.props.history.location.pathname !== '/register' && this.props.history.location.pathname !== '/login';
+    return (
+      <Fragment>
+        <Navbar />
+        <div className="my-4">
+          <div className="container">
+            <div className="row justify-content-center">
+              {
+                 isNotAuthPath &&
+                <div className="col-md-4">
+                  <button className="btn btn-info my-3 form-control">Start thread</button>
+                  
+                </div>
+              }
+              <div className="col-md-8">
+                <AppRouter />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Fragment>
+    );
+  }
 }
 
 export default App;
