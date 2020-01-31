@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.com/sundarshahi/cogent-assignment.svg?branch=dev)](https://travis-ci.com/sundarshahi/cogent-assignment)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
