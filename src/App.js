@@ -1,13 +1,14 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 
+import SideNav from './components/SideNav';
 import Navbar from './components/Navbar';
 import AppRouter from './components/AppRouter';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     const isNotAuthPath = this.props.history.location.pathname !== '/register' && this.props.history.location.pathname !== '/login';
     return (
-      <Fragment>
+      <>
         <Navbar />
         <div className="my-4">
           <div className="container">
@@ -15,8 +16,8 @@ class App extends Component {
               {
                  isNotAuthPath &&
                 <div className="col-md-4">
-                  <button className="btn btn-info my-3 form-control">Start thread</button>
-                  
+                  <button className="btn btn-outline-dark my-3 form-control">Start thread</button>
+                  <SideNav/>
                 </div>
               }
               <div className="col-md-8">
@@ -25,7 +26,7 @@ class App extends Component {
             </div>
           </div>
         </div>
-      </Fragment>
+      </>
     );
   }
 }
