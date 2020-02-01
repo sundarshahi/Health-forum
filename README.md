@@ -1,5 +1,5 @@
 
-![Coverage Status](https://drive.google.com/open?id=1kW3VftwbP9ROsDRCLSTCnGfrhz71raJW)
+![image](https://drive.google.com/uc?export=view&id=1kW3VftwbP9ROsDRCLSTCnGfrhz71raJW)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
