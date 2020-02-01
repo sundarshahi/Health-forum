@@ -1,9 +1,11 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 
-import topicsReducer from './topics'
+import topicsReducer from './topics';
+import threadsReducer from './threads';
 
 const reducer = combineReducers({
-  topics: topicsReducer
+  topics: topicsReducer,
+  threads: threadsReducer
 })
 
 export default reducer
