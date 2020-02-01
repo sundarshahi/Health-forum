@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import TopicsList from './TopicsList'
+import loadingGif from '../../loading.gif'
 import getTopics from '../../redux/actions/topics';
 
 
@@ -11,12 +12,25 @@ class TopicsContainer extends React.Component {
   }
 
   render() {
-    return <TopicsList topics={this.props.topics}/>;
+    
+    return <div>
+      {
+        !this.props.loading &&
+        <TopicsList topics={this.props.topics}/>
+      }
+      {
+        this.props.loading &&
+        <div className="text-center">
+          <img src={loadingGif} alt="" width="40px" height="40px" className="img"/> 
+        </div>
+      }
+    </div>;
   }
 }
 
 const mapStateToProps = state => ({
-  topics: state.topics
+  topics: state.topics.data,
+  loading:state.topics.loading
 });
 
 const mapDispatchToProps = dispatch => ({
