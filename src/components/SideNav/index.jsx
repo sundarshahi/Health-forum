@@ -1,20 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const SideNav = () => (
-  <ul className="list-group">
-    <li className="list-group-item">
-      Virus
-    </li>
-    <li className="list-group-item">
-      Infection
-    </li>
-    <li className="list-group-item">
-      Type-1-diabetes
-    </li>
-    <li className="list-group-item">
-      Cancer
-    </li>
-  </ul>
-);
+import TopicsList from './TopicsList'
+import getTopics from '../../redux/actions/topics';
 
-export default SideNav;
+
+class TopicsContainer extends React.Component {
+  componentWillMount() {
+    this.props.getTopics();
+  }
+
+  render() {
+    return <TopicsList topics={this.props.topics}/>;
+  }
+}
+
+const mapStateToProps = state => ({
+  topics: state.topics
+});
+
+const mapDispatchToProps = dispatch => ({
+  getTopics: () => {
+    dispatch(getTopics())
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopicsContainer);
