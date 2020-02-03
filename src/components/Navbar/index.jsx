@@ -13,11 +13,11 @@ const Navbar = () => (
         <ul className="navbar-nav mr-auto" />
         <ul className="navbar-nav ml-auto">
           <li className="nav-item dropdown">
-            <a id="navbarDropdown" className="nav-link dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Sundar Shahi Thakuri<span className="caret" />
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a className="dropdown-item" href="">
+              <a className="dropdown-item" href="#">
                 Logout
             </a>
             </div>
