@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Loader from '../../Loader';
 import HomeThreads from './HomeThreads';
-import loadingGif from '../../../loading.gif';
 import {getThreads} from '../../../redux/actions/threads';
+
 
 class HomeContainer extends Component {
   componentWillMount() {
@@ -31,9 +32,7 @@ class HomeContainer extends Component {
         }
         {
           this.props.loading &&
-          <div className="text-center">
-            <img src={loadingGif} alt="loading" width="95px" height="92px" className="img"/>
-          </div>
+         <Loader width={"91px"} height={"93px"}/>
         }
      </div>
     );

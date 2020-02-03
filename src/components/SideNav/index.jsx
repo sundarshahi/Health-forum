@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import TopicsList from './TopicsList'
-import loadingGif from '../../loading.gif'
+import Loader from '../Loader';
+import TopicsList from './TopicsList';
 import getTopics from '../../redux/actions/topics';
 
 
@@ -20,9 +20,7 @@ class TopicsContainer extends React.Component {
       }
       {
         this.props.loading &&
-        <div className="text-center">
-          <img src={loadingGif} alt="" width="40px" height="40px" className="img"/> 
-        </div>
+        <Loader/>
       }
     </div>;
   }
