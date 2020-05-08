@@ -1,11 +1,10 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { Fragment } from 'react';
+import React from 'react';
 import ReactPaginate from 'react-paginate';
 
 import Thread from '../../../Thread';
 
 const HomeThreads = ({threads,handlePageChange, pageCount,currentPage}) => (
-  <Fragment>
+  <>
     {threads.map(thread => <Thread thread={thread} key={thread.id}/>)}
     <div className="row justify-content-center my-5">
     <ReactPaginate
@@ -24,7 +23,7 @@ const HomeThreads = ({threads,handlePageChange, pageCount,currentPage}) => (
         forcePage={currentPage}
       />
     </div>
-  </Fragment>
+  </>
 );
 
 export default HomeThreads;

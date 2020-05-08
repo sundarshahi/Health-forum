@@ -1,59 +1,54 @@
-import React, { Fragment } from 'react';
-import {connect} from 'react-redux';
+import React, { useEffect} from 'react';
+import {useSelector,useDispatch,shallowEqual} from 'react-redux';
 
 import Loader from '../../Loader';
 import SingleThread from './SingleThread';
 import {getThread} from '../../../redux/actions/threads';
 import {getReplies} from '../../../redux/actions/replies';
 
-class ThreadContainer extends React.Component{
-    componentWillMount() {
-        const { id } = this.props.match.params
-        this.props.getThread(id)
-        this.props.getReplies(id)
-      }
+function ThreadContainer (props){
+  
+  const {thread,loading,replies} = useSelector(state =>({
+  thread: state.thread.data,
+  loading: state.thread.loading,
+  loadingReplies: state.thread.loadingReplies,
+  replies: state.thread.replies
+}),shallowEqual)
 
-      getPageCount = (total, perPage) => {
+const dispatch = useDispatch()
+  
+    useEffect( (page) =>{
+        const { id } =props.match.params
+        dispatch(getThread(id))
+        dispatch(getReplies(id,page))
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      },[])
+
+      const getPageCount = (total, perPage) => {
         return Math.ceil(total / perPage);
       }
     
-      handlePageChange = (page) => {
-        const { id } = this.props.match.params
-        this.props.getReplies(id, page.selected + 1)
+      const handlePageChange = (page) => {
+        const { id } = props.match.params
+        dispatch(getReplies(id, page.selected + 1))
       }
       
-    render(){
         return(
-            <Fragment>
+            <>
                 {
-                    this.props.loading?
+                    loading?
                     <Loader/>
                     :
                     <SingleThread 
-                        thread={this.props.thread}
-                        replies={this.props.replies}
-                        getPageCount={this.getPageCount}
-                        handlePageChange={this.handlePageChange}
+                        thread={thread}
+                        replies={replies}
+                        getPageCount={getPageCount}
+                        handlePageChange={handlePageChange}
                     />
                 }
-            </Fragment>
+            </>
         )
     }
-}
-const mapStateToProps = (state) =>({
-    thread: state.thread.data,
-    loading: state.thread.loading,
-    loadingReplies: state.thread.loadingReplies,
-    replies: state.thread.replies
-})
 
-const mapDispatchToProps = (dispatch) => ({
-    getThread: (id) => {
-      dispatch(getThread(id))
-    },
-    getReplies: (id,page) => {
-        dispatch(getReplies(id,page))
-      }
-  })
   
-  export default connect(mapStateToProps, mapDispatchToProps)(ThreadContainer)
+  export default ThreadContainer

@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import RegisterForm from './RegisterForm';
 
-class RegisterContainer extends Component {
-  render() {
+function RegisterContainer () {
+  
     return (
       <RegisterForm />
     );
   }
-}
 
 export default RegisterContainer;
