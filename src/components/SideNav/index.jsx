@@ -1,40 +1,40 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, {useEffect} from 'react';
+import { useDispatch,useSelector,shallowEqual } from 'react-redux';
 
 import Loader from '../Loader';
 import TopicsList from './TopicsList';
 import getTopics from '../../redux/actions/topics';
 
 
-class TopicsContainer extends React.Component {
-  componentWillMount() {
-    this.props.getTopics();
-  }
+function TopicsContainer () {
 
-  render() {
+  const {topics,loading} = useSelector(state=>({
+    topics: state.topics.data,
+    loading:state.topics.loading
+  }),shallowEqual)
+
+  
+
+  const dispatch = useDispatch()
+
+  useEffect(()=> {
+    dispatch(getTopics())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
     
     return <div>
       {
-        !this.props.loading &&
-        <TopicsList topics={this.props.topics}/>
+        
+        !loading &&
+        <TopicsList topics={topics}/>
       }
       {
-        this.props.loading &&
+        loading &&
         <Loader/>
       }
     </div>;
   }
-}
 
-const mapStateToProps = state => ({
-  topics: state.topics.data,
-  loading:state.topics.loading
-});
 
-const mapDispatchToProps = dispatch => ({
-  getTopics: () => {
-    dispatch(getTopics())
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TopicsContainer);
+export default TopicsContainer;

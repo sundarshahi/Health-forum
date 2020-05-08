@@ -1,53 +1,51 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect ,useCallback} from 'react';
+import { shallowEqual,useDispatch,useSelector } from 'react-redux'
 
 import Loader from '../../Loader';
 import HomeThreads from './HomeThreads';
 import {getThreads} from '../../../redux/actions/threads';
 
 
-class HomeContainer extends Component {
-  componentWillMount() {
-    this.props.getThreads();
-  }
-  getPageCount = (total, perPage) => {
+function HomeContainer (props) {
+
+  const {threadsData,loading} = useSelector(state => ({
+    threadsData: state.threads,
+    loading: state.threads.loading,
+  }), shallowEqual);
+  
+  const dispatch = useDispatch()
+  
+  const fetchThreads= useCallback((page) => {
+        dispatch(getThreads(page))
+      }, [dispatch])
+
+  useEffect(() => {
+    fetchThreads()
+  }, [fetchThreads]);
+
+  const getPageCount = (total, perPage) => {
     return Math.ceil(total / perPage);
   }
 
-  handlePageChange = (page) => {
-    this.props.getThreads(page.selected + 1);
+ const handlePageChange = (page) => {
+  fetchThreads(page.selected + 1);
   }
-
-  render() {
     return (
      <div>
         {
-          !this.props.loading &&
+          !loading &&
           <HomeThreads
-            threads={this.props.threadsData.data}
-            handlePageChange={this.handlePageChange}
-            pageCount={this.getPageCount(this.props.threadsData.total, this.props.threadsData.per_page)}
-            currentPage={this.props.threadsData.current_page - 1}
+            threads={threadsData.data}
+            handlePageChange={handlePageChange}
+            pageCount={getPageCount(threadsData.total, threadsData.per_page)}
+            currentPage={threadsData.current_page - 1}
           />
         }
         {
-          this.props.loading &&
+          loading &&
          <Loader width={"91px"} height={"93px"}/>
         }
      </div>
     );
   }
-}
-
-const mapStateToProps = (state) => ({
-  threadsData: state.threads,
-  loading: state.threads.loading
-}) 
-
-const mapDispatchToProps = (dispatch) => ({
-  getThreads: (page) => {
-    dispatch(getThreads(page))
-  }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
+export default HomeContainer;
