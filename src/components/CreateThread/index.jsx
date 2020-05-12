@@ -1,18 +1,14 @@
-import React, { Fragment } from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-import ThreadForm from './ThreadForm'
+import ThreadForm from './ThreadForm';
 
-class CreateThread extends React.Component {
-  render() {
-    return (
-      <Fragment>
-        {this.props.authenticated && <ThreadForm />}
-      </Fragment>
-    )
-  }
+function CreateThread() {
+  const { authenticated } = useSelector(() => ({
+    authenticated: true,
+  }));
+
+  return <>{authenticated && <ThreadForm />}</>;
 }
 
-export default connect(state => ({
-  authenticated:  true
-}))(CreateThread)
+export default CreateThread;

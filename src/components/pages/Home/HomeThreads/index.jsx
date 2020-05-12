@@ -3,11 +3,13 @@ import ReactPaginate from 'react-paginate';
 
 import Thread from '../../../Thread';
 
-const HomeThreads = ({threads,handlePageChange, pageCount,currentPage}) => (
+const HomeThreads = ({ threads, handlePageChange, pageCount, currentPage }) => (
   <>
-    {threads.map(thread => <Thread thread={thread} key={thread.id}/>)}
+    {threads?.map((thread) => (
+      <Thread thread={thread} key={thread.id} />
+    ))}
     <div className="row justify-content-center my-5">
-    <ReactPaginate
+      <ReactPaginate
         containerClassName="pagination"
         pageClassName="page-item"
         pageLinkClassName="page-link"
