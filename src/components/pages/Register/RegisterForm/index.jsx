@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 
 const RegisterForm = () => (
@@ -6,30 +8,74 @@ const RegisterForm = () => (
     <div className="card-body">
       <form method="POST" action="#">
         <div className="form-group row">
-          <label htmlFor="name" className="col-sm-4 col-form-label text-md-right">Name</label>
+          <label
+            htmlFor="name"
+            className="col-sm-4 col-form-label text-md-right"
+          >
+            Name
+          </label>
           <div className="col-md-6">
-            <input id="name" type="text" className="form-control is-invalid" name="name" required autoFocus />
+            <input
+              id="name"
+              type="text"
+              className="form-control is-invalid"
+              name="name"
+              required
+            />
             <span className="invalid-feedback">
               <strong>The name is required.</strong>
             </span>
           </div>
         </div>
         <div className="form-group row">
-          <label htmlFor="email" className="col-sm-4 col-form-label text-md-right">E-Mail Address</label>
+          <label
+            htmlFor="email"
+            className="col-sm-4 col-form-label text-md-right"
+          >
+            E-Mail Address
+          </label>
           <div className="col-md-6">
-            <input id="email" type="email" className="form-control" name="email" required />
+            <input
+              id="email"
+              type="email"
+              className="form-control"
+              name="email"
+              required
+            />
           </div>
         </div>
         <div className="form-group row">
-          <label htmlFor="password" className="col-sm-4 col-form-label text-md-right">Password</label>
+          <label
+            htmlFor="password"
+            className="col-sm-4 col-form-label text-md-right"
+          >
+            Password
+          </label>
           <div className="col-md-6">
-            <input id="password" type="password" className="form-control" name="password" required />
+            <input
+              id="password"
+              type="password"
+              className="form-control"
+              name="password"
+              required
+            />
           </div>
         </div>
         <div className="form-group row">
-          <label htmlFor="password_confirmation" className="col-sm-4 col-form-label text-md-right">Confirm password</label>
+          <label
+            htmlFor="password_confirmation"
+            className="col-sm-4 col-form-label text-md-right"
+          >
+            Confirm password
+          </label>
           <div className="col-md-6">
-            <input id="password_confirmation" type="password" className="form-control" name="password_confirmation" required />
+            <input
+              id="password_confirmation"
+              type="password"
+              className="form-control"
+              name="password_confirmation"
+              required
+            />
           </div>
         </div>
         <div className="form-group row mb-0">
