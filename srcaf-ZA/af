@@ -1,56 +1,54 @@
-/* eslint-disable jsx-a11y/label-has-for */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
-const LoginForm = () => (
-  <div className="card">
-    <div className="card-header">Login</div>
-    <div className="card-body">
-      <form method="POST" action="#">
-        <div className="form-group row">
-          <label
-            htmlFor="email"
-            className="col-sm-4 col-form-label text-md-right"
-          >
-            E-Mail Address
-          </label>
-          <div className="col-md-6">
-            <input
-              id="email"
-              type="email"
-              className="form-control"
-              name="email"
-              required
-            />
-          </div>
-        </div>
-        <div className="form-group row">
-          <label
-            htmlFor="password"
-            className="col-sm-4 col-form-label text-md-right"
-          >
-            Password
-          </label>
-          <div className="col-md-6">
-            <input
-              id="password"
-              type="password"
-              className="form-control"
-              name="password"
-              required
-            />
-          </div>
-        </div>
-        <div className="form-group row mb-0">
-          <div className="col-md-8 offset-md-4">
-            <button type="submit" className="btn btn-primary">
-              Login
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-);
+import Loader from '../../Loader';
+import SingleThread from './SingleThread';
+import { requestThread } from '../../../redux/actions/threads';
+import { requestReplies } from '../../../redux/actions/replies';
 
-export default LoginForm;
+function ThreadContainer(props) {
+  const { thread, loading, replies } = useSelector(
+    (state) => ({
+      thread: state.thread.data,
+      loading: state.thread.loading,
+      loadingReplies: state.thread.loadingReplies,
+      replies: state.thread.replies,
+    }),
+    shallowEqual,
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect((page) => {
+    const { id } = props.match.params;
+    dispatch(requestThread(id));
+    dispatch(requestReplies(id, page));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getPageCount = (total, perPage) => {
+    return Math.ceil(total / perPage);
+  };
+
+  const handlePageChange = (page) => {
+    const { id } = props.match.params;
+    dispatch(requestReplies(id, page.selected + 1));
+  };
+
+  return (
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <SingleThread
+          thread={thread}
+          replies={replies}
+          getPageCount={getPageCount}
+          handlePageChange={handlePageChange}
+        />
+      )}
+    </>
+  );
+}
+
+export default ThreadContainer;
