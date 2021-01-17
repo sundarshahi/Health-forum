@@ -1,23 +1,11 @@
-import {
-    call,
-    put,
-    takeLatest
-} from 'redux-saga/effects';
-import {
-    REQUEST_THREADS,
-    receiveThreads
-} from '../actions/threads';
-import { fetchThreads } from '../api';
-function* getThreads({payload}) {
-    try {
-        // do api call
-        const data = yield call(fetchThreads, payload);
-        console.log(data);
-        yield put(receiveThreads(data));
-    } catch (e) {
-        console.log(e);
-    }
-}
+import { all } from 'redux-saga/effects';
+import thread from './thread';
+import threads from './threads';
+import topics from './topics';
 export default function* rootSaga() {
-    yield takeLatest(REQUEST_THREADS, getThreads);
+    yield all([
+        threads(),
+        thread(),
+        topics()
+    ]);
 }
