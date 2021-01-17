@@ -1,23 +1,32 @@
-import React from 'react';
-import Gravatar from 'react-gravatar';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-const Reply = ({ reply }) => (
-  <div className="card mb-3">
-    <div className="card-header">
-      <Gravatar
-        email={reply.owner.email}
-        className="mr-3 rounded-circle"
-        width="30px"
-        height="30px"
-      />
-      <span className="text-sm text-muted">
-        {reply.owner.name}, <b> 1 hrs ago</b>
-      </span>
-    </div>
-    <div className="card-body">
-      <p className="text-center">{reply.body}</p>
-    </div>
-  </div>
-);
+import Loader from '../Loader';
+import TopicsList from './TopicsList';
+import { requestTopics } from '../../redux/actions/topics';
 
-export default Reply;
+function TopicsContainer() {
+  const { topics, loading } = useSelector(
+    (state) => ({
+      topics: state.topics.data,
+      loading: state.topics.loading,
+    }),
+    shallowEqual,
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(requestTopics());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div>
+      {!loading && <TopicsList topics={topics} />}
+      {loading && <Loader />}
+    </div>
+  );
+}
+
+export default TopicsContainer;
