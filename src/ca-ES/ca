@@ -1,9 +1,12 @@
-import React from 'react';
-
-import RegisterForm from './RegisterForm';
-
-function RegisterContainer() {
-  return <RegisterForm />;
-}
-
-export default RegisterContainer;
+export {
+    default as Home
+} from './Home';
+export {
+    default as Login
+} from './Login';
+export {
+    default as Thread
+} from './Thread';
+export {
+    default as Register
+} from './Register';
