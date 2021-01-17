@@ -1,22 +1,20 @@
-import {
-    call,
-    put,
-    takeLatest
-} from 'redux-saga/effects';
-import {
-    GET_TOPICS,
-    receiveTopics
-} from '../actions/topics';
-import { fetchTopics } from '../api';
-function* getTopics() {
-    try {
-        // do api call
-        const data = yield call(fetchTopics);
-        yield put(receiveTopics(data));
-    } catch (e) {
-        console.log(e);
-    }
-}
-export default function* rootSaga() {
-    yield takeLatest(GET_TOPICS, getTopics);
-}
+export const REQUEST_THREADS = 'REQUEST_THREADS';
+export const RECEIVE_THREADS = 'RECEIVE_THREADS';
+export const REQUEST_THREAD = 'REQUEST_THREAD';
+export const RECEIVE_THREAD = 'RECEIVE_THREAD';
+export const requestThreads = page => ({
+    type: REQUEST_THREADS,
+    payload: page
+});
+export const receiveThreads = data => ({
+    type: RECEIVE_THREADS,
+    payload: data
+});
+export const requestThread = id => ({
+    type: REQUEST_THREAD,
+    payload: id
+});
+export const receiveThread = data => ({
+    type: RECEIVE_THREAD,
+    payload: data
+});
