@@ -1,10 +1,11 @@
-import { combineReducers } from 'redux';
-import topicsReducer from './topics';
-import threadsReducer from './threads';
-import threadReducer from './thread';
-const reducer = combineReducers({
-    topics: topicsReducer,
-    threads: threadsReducer,
-    thread: threadReducer
-});
-export default reducer;
+import { all } from 'redux-saga/effects';
+import thread from './thread';
+import threads from './threads';
+import topics from './topics';
+export default function* rootSaga() {
+    yield all([
+        threads(),
+        thread(),
+        topics()
+    ]);
+}
