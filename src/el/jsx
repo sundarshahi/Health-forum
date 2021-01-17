@@ -1,93 +1,60 @@
-/* eslint-disable jsx-a11y/label-has-for */
-/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const RegisterForm = () => (
-  <div className="card">
-    <div className="card-header">Register</div>
-    <div className="card-body">
-      <form method="POST" action="#">
-        <div className="form-group row">
-          <label
-            htmlFor="name"
-            className="col-sm-4 col-form-label text-md-right"
-          >
-            Name
-          </label>
-          <div className="col-md-6">
-            <input
-              id="name"
-              type="text"
-              className="form-control is-invalid"
-              name="name"
-              required
-            />
-            <span className="invalid-feedback">
-              <strong>The name is required.</strong>
-            </span>
-          </div>
-        </div>
-        <div className="form-group row">
-          <label
-            htmlFor="email"
-            className="col-sm-4 col-form-label text-md-right"
-          >
-            E-Mail Address
-          </label>
-          <div className="col-md-6">
-            <input
-              id="email"
-              type="email"
-              className="form-control"
-              name="email"
-              required
-            />
-          </div>
-        </div>
-        <div className="form-group row">
-          <label
-            htmlFor="password"
-            className="col-sm-4 col-form-label text-md-right"
-          >
-            Password
-          </label>
-          <div className="col-md-6">
-            <input
-              id="password"
-              type="password"
-              className="form-control"
-              name="password"
-              required
-            />
-          </div>
-        </div>
-        <div className="form-group row">
-          <label
-            htmlFor="password_confirmation"
-            className="col-sm-4 col-form-label text-md-right"
-          >
-            Confirm password
-          </label>
-          <div className="col-md-6">
-            <input
-              id="password_confirmation"
-              type="password"
-              className="form-control"
-              name="password_confirmation"
-              required
-            />
-          </div>
-        </div>
-        <div className="form-group row mb-0">
-          <div className="col-md-8 offset-md-4">
-            <button type="submit" className="btn btn-primary">
+const Navbar = () => (
+  <nav className="navbar navbar-expand-lg navbar-light navbar-forum">
+    <div className="container">
+      <Link className="navbar-brand" to="/">
+        स्वास्थ्य-जनचासो{' '}
+      </Link>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon" />
+      </button>
+      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul className="navbar-nav mr-auto" />
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item dropdown">
+            <a
+              id="navbarDropdown"
+              className="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Sundar Shahi Thakuri
+              <span className="caret" />
+            </a>
+            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a className="dropdown-item" href="#">
+                Logout
+              </a>
+            </div>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/login">
+              Login
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/register">
               Register
-            </button>
-          </div>
-        </div>
-      </form>
+            </Link>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
+  </nav>
 );
 
-export default RegisterForm;
+export default Navbar;
