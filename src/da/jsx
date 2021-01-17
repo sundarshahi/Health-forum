@@ -1,32 +1,15 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import React from 'react';
+import { Route } from 'react-router-dom';
 
-import Loader from '../Loader';
-import TopicsList from './TopicsList';
-import { requestTopics } from '../../redux/actions/topics';
+import { Home, Login, Thread, Register } from '../pages';
 
-function TopicsContainer() {
-  const { topics, loading } = useSelector(
-    (state) => ({
-      topics: state.topics.data,
-      loading: state.topics.loading,
-    }),
-    shallowEqual,
-  );
+const AppRouter = () => (
+  <>
+    <Route path="/" exact component={Home} />
+    <Route path="/login" component={Login} />
+    <Route path="/register" component={Register} />
+    <Route path="/thread/:id" component={Thread} />
+  </>
+);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(requestTopics());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <div>
-      {!loading && <TopicsList topics={topics} />}
-      {loading && <Loader />}
-    </div>
-  );
-}
-
-export default TopicsContainer;
+export default AppRouter;
