@@ -4,20 +4,19 @@ import {
     takeLatest
 } from 'redux-saga/effects';
 import {
-    REQUEST_THREADS,
-    receiveThreads
-} from '../actions/threads';
-import { fetchThreads } from '../api';
-function* getThreads({payload}) {
+    GET_TOPICS,
+    receiveTopics
+} from '../actions/topics';
+import { fetchTopics } from '../api';
+function* getTopics() {
     try {
         // do api call
-        const data = yield call(fetchThreads, payload);
-        console.log(data);
-        yield put(receiveThreads(data));
+        const data = yield call(fetchTopics);
+        yield put(receiveTopics(data));
     } catch (e) {
         console.log(e);
     }
 }
 export default function* rootSaga() {
-    yield takeLatest(REQUEST_THREADS, getThreads);
+    yield takeLatest(GET_TOPICS, getTopics);
 }
