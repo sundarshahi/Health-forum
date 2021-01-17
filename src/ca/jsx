@@ -1,14 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
-import ThreadForm from './ThreadForm';
+import RegisterForm from './RegisterForm';
 
-function CreateThread() {
-  const { authenticated } = useSelector(() => ({
-    authenticated: true,
-  }));
-
-  return <>{authenticated && <ThreadForm />}</>;
+function RegisterContainer() {
+  return <RegisterForm />;
 }
 
-export default CreateThread;
+export default RegisterContainer;
