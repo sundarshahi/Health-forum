@@ -1,51 +1,23 @@
-import React, { useEffect, useCallback } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import Gravatar from 'react-gravatar';
 
-import Loader from '../../Loader';
-import HomeThreads from './HomeThreads';
-import { requestThreads } from '../../../redux/actions/threads';
-
-function HomeContainer() {
-  const { threadsData, loading } = useSelector(
-    (state) => ({
-      threadsData: state.threads,
-      loading: state.threads.loading,
-    }),
-    shallowEqual,
-  );
-
-  const dispatch = useDispatch();
-
-  const fetchThreads = useCallback(
-    (page) => {
-      dispatch(requestThreads(page));
-    },
-    [dispatch],
-  );
-
-  useEffect(() => {
-    fetchThreads();
-  }, [fetchThreads]);
-
-  const getPageCount = (total, perPage) => {
-    return Math.ceil(total / perPage);
-  };
-
-  const handlePageChange = (page) => {
-    fetchThreads(page.selected + 1);
-  };
-  return (
-    <div>
-      {!loading && (
-        <HomeThreads
-          threads={threadsData.data}
-          handlePageChange={handlePageChange}
-          pageCount={getPageCount(threadsData.total, threadsData.per_page)}
-          currentPage={threadsData.current_page - 1}
-        />
-      )}
-      {loading && <Loader width="91px" height="93px" />}
+const Reply = ({ reply }) => (
+  <div className="card mb-3">
+    <div className="card-header">
+      <Gravatar
+        email={reply.owner.email}
+        className="mr-3 rounded-circle"
+        width="30px"
+        height="30px"
+      />
+      <span className="text-sm text-muted">
+        {reply.owner.name}, <b> 1 hrs ago</b>
+      </span>
     </div>
-  );
-}
-export default HomeContainer;
+    <div className="card-body">
+      <p className="text-center">{reply.body}</p>
+    </div>
+  </div>
+);
+
+export default Reply;
