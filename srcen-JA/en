@@ -1,51 +1,54 @@
-import React, { useEffect, useCallback } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import Loader from '../../Loader';
-import HomeThreads from './HomeThreads';
-import { requestThreads } from '../../../redux/actions/threads';
+import SingleThread from './SingleThread';
+import { requestThread } from '../../../redux/actions/threads';
+import { requestReplies } from '../../../redux/actions/replies';
 
-function HomeContainer() {
-  const { threadsData, loading } = useSelector(
+function ThreadContainer(props) {
+  const { thread, loading, replies } = useSelector(
     (state) => ({
-      threadsData: state.threads,
-      loading: state.threads.loading,
+      thread: state.thread.data,
+      loading: state.thread.loading,
+      loadingReplies: state.thread.loadingReplies,
+      replies: state.thread.replies,
     }),
     shallowEqual,
   );
 
   const dispatch = useDispatch();
 
-  const fetchThreads = useCallback(
-    (page) => {
-      dispatch(requestThreads(page));
-    },
-    [dispatch],
-  );
-
-  useEffect(() => {
-    fetchThreads();
-  }, [fetchThreads]);
+  useEffect((page) => {
+    const { id } = props.match.params;
+    dispatch(requestThread(id));
+    dispatch(requestReplies(id, page));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getPageCount = (total, perPage) => {
     return Math.ceil(total / perPage);
   };
 
   const handlePageChange = (page) => {
-    fetchThreads(page.selected + 1);
+    const { id } = props.match.params;
+    dispatch(requestReplies(id, page.selected + 1));
   };
+
   return (
-    <div>
-      {!loading && (
-        <HomeThreads
-          threads={threadsData.data}
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <SingleThread
+          thread={thread}
+          replies={replies}
+          getPageCount={getPageCount}
           handlePageChange={handlePageChange}
-          pageCount={getPageCount(threadsData.total, threadsData.per_page)}
-          currentPage={threadsData.current_page - 1}
         />
       )}
-      {loading && <Loader width="91px" height="93px" />}
-    </div>
+    </>
   );
 }
-export default HomeContainer;
+
+export default ThreadContainer;
