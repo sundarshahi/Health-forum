@@ -1,14 +1,15 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-
-import ThreadForm from './ThreadForm';
-
-function CreateThread() {
-  const { authenticated } = useSelector(() => ({
-    authenticated: true,
-  }));
-
-  return <>{authenticated && <ThreadForm />}</>;
-}
-
-export default CreateThread;
+export {
+    default as Navbar
+} from './Navbar';
+export {
+    default as SideNav
+} from './SideNav';
+export {
+    default as AppRouter
+} from './AppRouter';
+export {
+    default as CreateThread
+} from './CreateThread';
+export {
+    default as ThreadButton
+} from './CreateThread/ThreadButton';
