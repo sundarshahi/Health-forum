@@ -1,45 +1,23 @@
 import {
     call,
     put,
-    all,
     takeLatest
 } from 'redux-saga/effects';
 import {
-    REQUEST_THREAD,
-    receiveThread
+    REQUEST_THREADS,
+    receiveThreads
 } from '../actions/threads';
-import {
-    GET_REPLIES,
-    receiveReplies
-} from '../actions/replies';
-import {
-    fetchThread,
-    fetchReplies
-} from '../api';
-function* getThread({payload}) {
+import { fetchThreads } from '../api';
+function* getThreads({payload}) {
     try {
         // do api call
-        const data = yield call(fetchThread, payload);
+        const data = yield call(fetchThreads, payload);
         console.log(data);
-        yield put(receiveThread(data));
+        yield put(receiveThreads(data));
     } catch (e) {
         console.log(e);
     }
 }
-function* getReplies({id, page}) {
-    try {
-        // do api call
-        const data = yield call(fetchReplies, id, page);
-        console.log(data);
-        yield put(receiveReplies(data));
-    } catch (e) {
-        console.log(e);
-    }
+export default function* rootSaga() {
+    yield takeLatest(REQUEST_THREADS, getThreads);
 }
-function* watchAll() {
-    yield all([
-        takeLatest(GET_REPLIES, getReplies),
-        takeLatest(REQUEST_THREAD, getThread)
-    ]);
-}
-export default watchAll;
