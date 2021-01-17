@@ -1,9 +1,8 @@
 import React from 'react';
 
-import RegisterForm from './RegisterForm';
+import LoginForm from './LoginForm';
 
-function RegisterContainer() {
-  return <RegisterForm />;
+function LoginContainer() {
+  return <LoginForm />;
 }
-
-export default RegisterContainer;
+export default LoginContainer;
