@@ -1,51 +1,31 @@
-import React, { useEffect, useCallback } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import ReactPaginate from 'react-paginate';
 
-import Loader from '../../Loader';
-import HomeThreads from './HomeThreads';
-import { requestThreads } from '../../../redux/actions/threads';
+import Thread from '../../../Thread';
 
-function HomeContainer() {
-  const { threadsData, loading } = useSelector(
-    (state) => ({
-      threadsData: state.threads,
-      loading: state.threads.loading,
-    }),
-    shallowEqual,
-  );
-
-  const dispatch = useDispatch();
-
-  const fetchThreads = useCallback(
-    (page) => {
-      dispatch(requestThreads(page));
-    },
-    [dispatch],
-  );
-
-  useEffect(() => {
-    fetchThreads();
-  }, [fetchThreads]);
-
-  const getPageCount = (total, perPage) => {
-    return Math.ceil(total / perPage);
-  };
-
-  const handlePageChange = (page) => {
-    fetchThreads(page.selected + 1);
-  };
-  return (
-    <div>
-      {!loading && (
-        <HomeThreads
-          threads={threadsData.data}
-          handlePageChange={handlePageChange}
-          pageCount={getPageCount(threadsData.total, threadsData.per_page)}
-          currentPage={threadsData.current_page - 1}
-        />
-      )}
-      {loading && <Loader width="91px" height="93px" />}
+const HomeThreads = ({ threads, handlePageChange, pageCount, currentPage }) => (
+  <>
+    {threads?.map((thread) => (
+      <Thread thread={thread} key={thread.id} />
+    ))}
+    <div className="row justify-content-center my-5">
+      <ReactPaginate
+        containerClassName="pagination"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        activeClassName="active"
+        previousClassName="page-item"
+        nextClassName="page-item"
+        previousLinkClassName="page-link"
+        nextLinkClassName="page-link"
+        disabledClassName="disabled"
+        breakClassName="page-link"
+        onPageChange={handlePageChange}
+        pageCount={pageCount}
+        forcePage={currentPage}
+      />
     </div>
-  );
-}
-export default HomeContainer;
+  </>
+);
+
+export default HomeThreads;
