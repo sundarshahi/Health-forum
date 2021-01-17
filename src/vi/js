@@ -1,22 +1,11 @@
-import {
-    call,
-    put,
-    takeLatest
-} from 'redux-saga/effects';
-import {
-    GET_TOPICS,
-    receiveTopics
-} from '../actions/topics';
-import { fetchTopics } from '../api';
-function* getTopics() {
-    try {
-        // do api call
-        const data = yield call(fetchTopics);
-        yield put(receiveTopics(data));
-    } catch (e) {
-        console.log(e);
-    }
-}
-export default function* rootSaga() {
-    yield takeLatest(GET_TOPICS, getTopics);
-}
+export const GET_REPLIES = 'GET_REPLIES';
+export const GET_REPLIES_LOADED = 'GET_REPLIES_LOADED';
+export const requestReplies = (id, page) => ({
+    type: GET_REPLIES,
+    id,
+    page
+});
+export const receiveReplies = data => ({
+    type: GET_REPLIES_LOADED,
+    payload: data
+});
