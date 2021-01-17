@@ -1,31 +1,16 @@
 import React from 'react';
-import ReactPaginate from 'react-paginate';
 
-import Thread from '../../../Thread';
+import loadingGif from '../../loading.gif';
 
-const HomeThreads = ({ threads, handlePageChange, pageCount, currentPage }) => (
-  <>
-    {threads?.map((thread) => (
-      <Thread thread={thread} key={thread.id} />
-    ))}
-    <div className="row justify-content-center my-5">
-      <ReactPaginate
-        containerClassName="pagination"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        activeClassName="active"
-        previousClassName="page-item"
-        nextClassName="page-item"
-        previousLinkClassName="page-link"
-        nextLinkClassName="page-link"
-        disabledClassName="disabled"
-        breakClassName="page-link"
-        onPageChange={handlePageChange}
-        pageCount={pageCount}
-        forcePage={currentPage}
-      />
-    </div>
-  </>
+const Loader = ({ width, height }) => (
+  <div className="text-center">
+    <img
+      src={loadingGif}
+      alt="loading"
+      width={width || '40px'}
+      height={height || '42px'}
+      className="img"
+    />
+  </div>
 );
-
-export default HomeThreads;
+export default Loader;
