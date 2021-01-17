@@ -1,23 +1,54 @@
-import React from 'react';
-import Gravatar from 'react-gravatar';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
-const Reply = ({ reply }) => (
-  <div className="card mb-3">
-    <div className="card-header">
-      <Gravatar
-        email={reply.owner.email}
-        className="mr-3 rounded-circle"
-        width="30px"
-        height="30px"
-      />
-      <span className="text-sm text-muted">
-        {reply.owner.name}, <b> 1 hrs ago</b>
-      </span>
-    </div>
-    <div className="card-body">
-      <p className="text-center">{reply.body}</p>
-    </div>
-  </div>
-);
+import Loader from '../../Loader';
+import SingleThread from './SingleThread';
+import { requestThread } from '../../../redux/actions/threads';
+import { requestReplies } from '../../../redux/actions/replies';
 
-export default Reply;
+function ThreadContainer(props) {
+  const { thread, loading, replies } = useSelector(
+    (state) => ({
+      thread: state.thread.data,
+      loading: state.thread.loading,
+      loadingReplies: state.thread.loadingReplies,
+      replies: state.thread.replies,
+    }),
+    shallowEqual,
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect((page) => {
+    const { id } = props.match.params;
+    dispatch(requestThread(id));
+    dispatch(requestReplies(id, page));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getPageCount = (total, perPage) => {
+    return Math.ceil(total / perPage);
+  };
+
+  const handlePageChange = (page) => {
+    const { id } = props.match.params;
+    dispatch(requestReplies(id, page.selected + 1));
+  };
+
+  return (
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <SingleThread
+          thread={thread}
+          replies={replies}
+          getPageCount={getPageCount}
+          handlePageChange={handlePageChange}
+        />
+      )}
+    </>
+  );
+}
+
+export default ThreadContainer;
