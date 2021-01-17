@@ -1,37 +1,32 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Gravatar from 'react-gravatar';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-const Thread = ({ thread }) => (
-  <div className="card mb-3">
-    <div className="card-header">
-      <Gravatar
-        email={thread.creator.email}
-        className="mr-3 rounded-circle"
-        width="30px"
-        height="30px"
-        alt=""
-      />
-      <span className="text-sm text-muted">
-        {thread.creator.name}, <b>3 hrs ago</b>
-      </span>
-      <Link
-        to={`/thread/${thread.id}`}
-        className="btn btn-outline-dark btn-xs float-right"
-      >
-        view thread
-      </Link>
-    </div>
-    <div className="card-body">
-      <h5 className="text-center">{thread.title}</h5>
-    </div>
-    <div className="card-footer text-muted">
-      <span>{thread.replies_count} replies</span>
-      <a href="##" className="btn btn-danger float-right btn-xs">
-        {thread.channel.name}
-      </a>
-    </div>
-  </div>
-);
+import Loader from '../Loader';
+import TopicsList from './TopicsList';
+import { requestTopics } from '../../redux/actions/topics';
 
-export default Thread;
+function TopicsContainer() {
+  const { topics, loading } = useSelector(
+    (state) => ({
+      topics: state.topics.data,
+      loading: state.topics.loading,
+    }),
+    shallowEqual,
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(requestTopics());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div>
+      {!loading && <TopicsList topics={topics} />}
+      {loading && <Loader />}
+    </div>
+  );
+}
+
+export default TopicsContainer;
