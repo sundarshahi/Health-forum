@@ -1,14 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { Route } from 'react-router-dom';
 
-import ThreadForm from './ThreadForm';
+import { Home, Login, Thread, Register } from '../pages';
 
-function CreateThread() {
-  const { authenticated } = useSelector(() => ({
-    authenticated: true,
-  }));
+const AppRouter = () => (
+  <>
+    <Route path="/" exact component={Home} />
+    <Route path="/login" component={Login} />
+    <Route path="/register" component={Register} />
+    <Route path="/thread/:id" component={Thread} />
+  </>
+);
 
-  return <>{authenticated && <ThreadForm />}</>;
-}
-
-export default CreateThread;
+export default AppRouter;
