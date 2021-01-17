@@ -1,16 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-import loadingGif from '../../loading.gif';
+import ThreadForm from './ThreadForm';
 
-const Loader = ({ width, height }) => (
-  <div className="text-center">
-    <img
-      src={loadingGif}
-      alt="loading"
-      width={width || '40px'}
-      height={height || '42px'}
-      className="img"
-    />
-  </div>
-);
-export default Loader;
+function CreateThread() {
+  const { authenticated } = useSelector(() => ({
+    authenticated: true,
+  }));
+
+  return <>{authenticated && <ThreadForm />}</>;
+}
+
+export default CreateThread;
