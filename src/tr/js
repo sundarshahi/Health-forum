@@ -1,13 +1,10 @@
-import {
-    createStore,
-    compose,
-    applyMiddleware
-} from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import reducer from './reducers';
-import sagas from './sagas';
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const sagaMiddleware = createSagaMiddleware();
-const store = createStore(reducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
-sagaMiddleware.run(sagas);
-export default store;
+import { combineReducers } from 'redux';
+import topicsReducer from './topics';
+import threadsReducer from './threads';
+import threadReducer from './thread';
+const reducer = combineReducers({
+    topics: topicsReducer,
+    threads: threadsReducer,
+    thread: threadReducer
+});
+export default reducer;
