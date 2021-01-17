@@ -1,31 +1,23 @@
 import React from 'react';
-import ReactPaginate from 'react-paginate';
+import Gravatar from 'react-gravatar';
 
-import Thread from '../../../Thread';
-
-const HomeThreads = ({ threads, handlePageChange, pageCount, currentPage }) => (
-  <>
-    {threads?.map((thread) => (
-      <Thread thread={thread} key={thread.id} />
-    ))}
-    <div className="row justify-content-center my-5">
-      <ReactPaginate
-        containerClassName="pagination"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        activeClassName="active"
-        previousClassName="page-item"
-        nextClassName="page-item"
-        previousLinkClassName="page-link"
-        nextLinkClassName="page-link"
-        disabledClassName="disabled"
-        breakClassName="page-link"
-        onPageChange={handlePageChange}
-        pageCount={pageCount}
-        forcePage={currentPage}
+const Reply = ({ reply }) => (
+  <div className="card mb-3">
+    <div className="card-header">
+      <Gravatar
+        email={reply.owner.email}
+        className="mr-3 rounded-circle"
+        width="30px"
+        height="30px"
       />
+      <span className="text-sm text-muted">
+        {reply.owner.name}, <b> 1 hrs ago</b>
+      </span>
     </div>
-  </>
+    <div className="card-body">
+      <p className="text-center">{reply.body}</p>
+    </div>
+  </div>
 );
 
-export default HomeThreads;
+export default Reply;
