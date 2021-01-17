@@ -1,31 +1,32 @@
-import React from 'react';
-import ReactPaginate from 'react-paginate';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-import Thread from '../../../Thread';
+import Loader from '../Loader';
+import TopicsList from './TopicsList';
+import { requestTopics } from '../../redux/actions/topics';
 
-const HomeThreads = ({ threads, handlePageChange, pageCount, currentPage }) => (
-  <>
-    {threads?.map((thread) => (
-      <Thread thread={thread} key={thread.id} />
-    ))}
-    <div className="row justify-content-center my-5">
-      <ReactPaginate
-        containerClassName="pagination"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        activeClassName="active"
-        previousClassName="page-item"
-        nextClassName="page-item"
-        previousLinkClassName="page-link"
-        nextLinkClassName="page-link"
-        disabledClassName="disabled"
-        breakClassName="page-link"
-        onPageChange={handlePageChange}
-        pageCount={pageCount}
-        forcePage={currentPage}
-      />
+function TopicsContainer() {
+  const { topics, loading } = useSelector(
+    (state) => ({
+      topics: state.topics.data,
+      loading: state.topics.loading,
+    }),
+    shallowEqual,
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(requestTopics());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div>
+      {!loading && <TopicsList topics={topics} />}
+      {loading && <Loader />}
     </div>
-  </>
-);
+  );
+}
 
-export default HomeThreads;
+export default TopicsContainer;
