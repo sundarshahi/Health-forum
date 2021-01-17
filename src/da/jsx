@@ -1,51 +1,56 @@
-import React, { useEffect, useCallback } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React from 'react';
 
-import Loader from '../../Loader';
-import HomeThreads from './HomeThreads';
-import { requestThreads } from '../../../redux/actions/threads';
-
-function HomeContainer() {
-  const { threadsData, loading } = useSelector(
-    (state) => ({
-      threadsData: state.threads,
-      loading: state.threads.loading,
-    }),
-    shallowEqual,
-  );
-
-  const dispatch = useDispatch();
-
-  const fetchThreads = useCallback(
-    (page) => {
-      dispatch(requestThreads(page));
-    },
-    [dispatch],
-  );
-
-  useEffect(() => {
-    fetchThreads();
-  }, [fetchThreads]);
-
-  const getPageCount = (total, perPage) => {
-    return Math.ceil(total / perPage);
-  };
-
-  const handlePageChange = (page) => {
-    fetchThreads(page.selected + 1);
-  };
-  return (
-    <div>
-      {!loading && (
-        <HomeThreads
-          threads={threadsData.data}
-          handlePageChange={handlePageChange}
-          pageCount={getPageCount(threadsData.total, threadsData.per_page)}
-          currentPage={threadsData.current_page - 1}
-        />
-      )}
-      {loading && <Loader width="91px" height="93px" />}
+const LoginForm = () => (
+  <div className="card">
+    <div className="card-header">Login</div>
+    <div className="card-body">
+      <form method="POST" action="#">
+        <div className="form-group row">
+          <label
+            htmlFor="email"
+            className="col-sm-4 col-form-label text-md-right"
+          >
+            E-Mail Address
+          </label>
+          <div className="col-md-6">
+            <input
+              id="email"
+              type="email"
+              className="form-control"
+              name="email"
+              required
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label
+            htmlFor="password"
+            className="col-sm-4 col-form-label text-md-right"
+          >
+            Password
+          </label>
+          <div className="col-md-6">
+            <input
+              id="password"
+              type="password"
+              className="form-control"
+              name="password"
+              required
+            />
+          </div>
+        </div>
+        <div className="form-group row mb-0">
+          <div className="col-md-8 offset-md-4">
+            <button type="submit" className="btn btn-primary">
+              Login
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-  );
-}
-export default HomeContainer;
+  </div>
+);
+
+export default LoginForm;
