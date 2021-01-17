@@ -1,8 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-import LoginForm from './LoginForm';
+import ThreadForm from './ThreadForm';
 
-function LoginContainer() {
-  return <LoginForm />;
+function CreateThread() {
+  const { authenticated } = useSelector(() => ({
+    authenticated: true,
+  }));
+
+  return <>{authenticated && <ThreadForm />}</>;
 }
-export default LoginContainer;
+
+export default CreateThread;
