@@ -1,14 +1,23 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import Gravatar from 'react-gravatar';
 
-import ThreadForm from './ThreadForm';
+const Reply = ({ reply }) => (
+  <div className="card mb-3">
+    <div className="card-header">
+      <Gravatar
+        email={reply.owner.email}
+        className="mr-3 rounded-circle"
+        width="30px"
+        height="30px"
+      />
+      <span className="text-sm text-muted">
+        {reply.owner.name}, <b> 1 hrs ago</b>
+      </span>
+    </div>
+    <div className="card-body">
+      <p className="text-center">{reply.body}</p>
+    </div>
+  </div>
+);
 
-function CreateThread() {
-  const { authenticated } = useSelector(() => ({
-    authenticated: true,
-  }));
-
-  return <>{authenticated && <ThreadForm />}</>;
-}
-
-export default CreateThread;
+export default Reply;
