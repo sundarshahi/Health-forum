@@ -1,12 +1,15 @@
 export {
-    default as Home
-} from './Home';
+    default as Navbar
+} from './Navbar';
 export {
-    default as Login
-} from './Login';
+    default as SideNav
+} from './SideNav';
 export {
-    default as Thread
-} from './Thread';
+    default as AppRouter
+} from './AppRouter';
 export {
-    default as Register
-} from './Register';
+    default as CreateThread
+} from './CreateThread';
+export {
+    default as ThreadButton
+} from './CreateThread/ThreadButton';
