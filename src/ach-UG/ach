@@ -1,9 +1,57 @@
-crwdns2168:0crwdne2168:0
+crwdns2180:0crwdne2180:0
+crwdns2182:0crwdne2182:0
+crwdns2184:0crwdne2184:0
 
-crwdns2170:0crwdne2170:0
+crwdns2186:0crwdne2186:0
 
-crwdns2172:0crwdne2172:0
-  crwdns2174:0crwdne2174:0
-crwdns2176:0crwdne2176:0
+crwdns2188:0crwdne2188:0
+  crwdns2190:0crwdne2190:0
+    crwdns2192:0crwdne2192:0
+      crwdns2194:0crwdne2194:0
+        crwdns2196:0crwdne2196:0
+          crwdns2198:0{thread.creator.email}crwdne2198:0
+          crwdns2200:0crwdne2200:0
+          crwdns2202:0crwdne2202:0
+          crwdns2204:0crwdne2204:0
+          crwdns2206:0crwdne2206:0
+        crwdns2208:0crwdne2208:0
+        crwdns2210:0crwdne2210:0
+          crwdns2212:0{thread.creator.name}crwdne2212:0
+        crwdns2214:0crwdne2214:0
+      crwdns2216:0crwdne2216:0
+      crwdns2218:0crwdne2218:0
+        crwdns2220:0{thread.title}crwdne2220:0
+        crwdns2222:0{thread.body}crwdne2222:0
+      crwdns2224:0crwdne2224:0
+      crwdns2226:0crwdne2226:0
+        crwdns2228:0{thread.replies_count}crwdne2228:0
+        crwdns2230:0crwdne2230:0
+          crwdns2232:0{thread.channel.name}crwdne2232:0
+        crwdns2234:0crwdne2234:0
+      crwdns2236:0crwdne2236:0
+    crwdns2238:0crwdne2238:0
 
-crwdns2178:0crwdne2178:0
+    crwdns2240:0crwdne2240:0
+      crwdns2242:0crwdne2242:0
+        crwdns2244:0{reply.id}crwdnd2244:0{reply}crwdne2244:0
+      crwdns2246:0crwdne2246:0
+      crwdns2248:0crwdne2248:0
+        crwdns2250:0crwdne2250:0
+        crwdns2252:0crwdne2252:0
+        crwdns2254:0crwdne2254:0
+        crwdns2256:0crwdne2256:0
+        crwdns2258:0crwdne2258:0
+        crwdns2260:0crwdne2260:0
+        crwdns2262:0crwdne2262:0
+        crwdns2264:0crwdne2264:0
+        crwdns2266:0crwdne2266:0
+        crwdns2268:0crwdne2268:0
+        crwdns2270:0{handlePageChange}crwdne2270:0
+        crwdns2272:0crwdne2272:0
+        crwdns2274:0{replies.current_page - 1}crwdne2274:0
+      crwdns2276:0crwdne2276:0
+    crwdns2278:0crwdne2278:0
+  crwdns2280:0crwdne2280:0
+crwdns2282:0crwdne2282:0
+
+crwdns2284:0crwdne2284:0
