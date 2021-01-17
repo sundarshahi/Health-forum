@@ -1,13 +1,11 @@
-import {
-    createStore,
-    compose,
-    applyMiddleware
-} from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import reducer from './reducers';
-import sagas from './sagas';
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const sagaMiddleware = createSagaMiddleware();
-const store = createStore(reducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
-sagaMiddleware.run(sagas);
-export default store;
+export const GET_TOPICS = 'GET_TOPICS';
+export const GET_TOPICS_LOADED = 'GET_TOPICS_LOADED';
+export const requestTopics = (id, page) => ({
+    type: GET_TOPICS,
+    id,
+    page
+});
+export const receiveTopics = data => ({
+    type: GET_TOPICS_LOADED,
+    payload: data
+});
