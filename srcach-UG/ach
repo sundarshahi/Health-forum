@@ -1,12 +1,23 @@
-crwdns1578:0crwdne1578:0
+crwdns1536:0crwdne1536:0
+crwdns1538:0crwdne1538:0
 
-crwdns1580:0{ topics }crwdne1580:0
-  crwdns1582:0crwdne1582:0
-    crwdns1584:0crwdne1584:0
-      crwdns1586:0{topic.id}crwdne1586:0
-        crwdns1588:0{topic.name}crwdne1588:0
-      crwdns1590:0crwdne1590:0
-    crwdns1592:0crwdne1592:0
-  crwdns1594:0crwdne1594:0
-crwdns1596:0crwdne1596:0
-crwdns1598:0crwdne1598:0
+crwdns1540:0{ reply }crwdne1540:0
+  crwdns1542:0crwdne1542:0
+    crwdns1544:0crwdne1544:0
+      crwdns1546:0crwdne1546:0
+        crwdns1548:0{reply.owner.email}crwdne1548:0
+        crwdns1550:0crwdne1550:0
+        crwdns1552:0crwdne1552:0
+        crwdns1554:0crwdne1554:0
+      crwdns1556:0crwdne1556:0
+      crwdns1558:0crwdne1558:0
+        crwdns1560:0{reply.owner.name}crwdne1560:0
+      crwdns1562:0crwdne1562:0
+    crwdns1564:0crwdne1564:0
+    crwdns1566:0crwdne1566:0
+      crwdns1568:0{reply.body}crwdne1568:0
+    crwdns1570:0crwdne1570:0
+  crwdns1572:0crwdne1572:0
+crwdns1574:0crwdne1574:0
+
+crwdns1576:0crwdne1576:0
