@@ -1,32 +1,51 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import React, { useEffect, useCallback } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-import Loader from '../Loader';
-import TopicsList from './TopicsList';
-import { requestTopics } from '../../redux/actions/topics';
+import Loader from '../../Loader';
+import HomeThreads from './HomeThreads';
+import { requestThreads } from '../../../redux/actions/threads';
 
-function TopicsContainer() {
-  const { topics, loading } = useSelector(
+function HomeContainer() {
+  const { threadsData, loading } = useSelector(
     (state) => ({
-      topics: state.topics.data,
-      loading: state.topics.loading,
+      threadsData: state.threads,
+      loading: state.threads.loading,
     }),
     shallowEqual,
   );
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(requestTopics());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const fetchThreads = useCallback(
+    (page) => {
+      dispatch(requestThreads(page));
+    },
+    [dispatch],
+  );
 
+  useEffect(() => {
+    fetchThreads();
+  }, [fetchThreads]);
+
+  const getPageCount = (total, perPage) => {
+    return Math.ceil(total / perPage);
+  };
+
+  const handlePageChange = (page) => {
+    fetchThreads(page.selected + 1);
+  };
   return (
     <div>
-      {!loading && <TopicsList topics={topics} />}
-      {loading && <Loader />}
+      {!loading && (
+        <HomeThreads
+          threads={threadsData.data}
+          handlePageChange={handlePageChange}
+          pageCount={getPageCount(threadsData.total, threadsData.per_page)}
+          currentPage={threadsData.current_page - 1}
+        />
+      )}
+      {loading && <Loader width="91px" height="93px" />}
     </div>
   );
 }
-
-export default TopicsContainer;
+export default HomeContainer;
