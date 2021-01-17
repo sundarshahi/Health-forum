@@ -1,37 +1,51 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Gravatar from 'react-gravatar';
+import React, { useEffect, useCallback } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-const Thread = ({ thread }) => (
-  <div className="card mb-3">
-    <div className="card-header">
-      <Gravatar
-        email={thread.creator.email}
-        className="mr-3 rounded-circle"
-        width="30px"
-        height="30px"
-        alt=""
-      />
-      <span className="text-sm text-muted">
-        {thread.creator.name}, <b>3 hrs ago</b>
-      </span>
-      <Link
-        to={`/thread/${thread.id}`}
-        className="btn btn-outline-dark btn-xs float-right"
-      >
-        view thread
-      </Link>
-    </div>
-    <div className="card-body">
-      <h5 className="text-center">{thread.title}</h5>
-    </div>
-    <div className="card-footer text-muted">
-      <span>{thread.replies_count} replies</span>
-      <a href="##" className="btn btn-danger float-right btn-xs">
-        {thread.channel.name}
-      </a>
-    </div>
-  </div>
-);
+import Loader from '../../Loader';
+import HomeThreads from './HomeThreads';
+import { requestThreads } from '../../../redux/actions/threads';
 
-export default Thread;
+function HomeContainer() {
+  const { threadsData, loading } = useSelector(
+    (state) => ({
+      threadsData: state.threads,
+      loading: state.threads.loading,
+    }),
+    shallowEqual,
+  );
+
+  const dispatch = useDispatch();
+
+  const fetchThreads = useCallback(
+    (page) => {
+      dispatch(requestThreads(page));
+    },
+    [dispatch],
+  );
+
+  useEffect(() => {
+    fetchThreads();
+  }, [fetchThreads]);
+
+  const getPageCount = (total, perPage) => {
+    return Math.ceil(total / perPage);
+  };
+
+  const handlePageChange = (page) => {
+    fetchThreads(page.selected + 1);
+  };
+  return (
+    <div>
+      {!loading && (
+        <HomeThreads
+          threads={threadsData.data}
+          handlePageChange={handlePageChange}
+          pageCount={getPageCount(threadsData.total, threadsData.per_page)}
+          currentPage={threadsData.current_page - 1}
+        />
+      )}
+      {loading && <Loader width="91px" height="93px" />}
+    </div>
+  );
+}
+export default HomeContainer;
