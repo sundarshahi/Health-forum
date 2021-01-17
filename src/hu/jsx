@@ -1,51 +1,26 @@
-import React, { useEffect, useCallback } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import React from 'react'
 
-import Loader from '../../Loader';
-import HomeThreads from './HomeThreads';
-import { requestThreads } from '../../../redux/actions/threads';
-
-function HomeContainer() {
-  const { threadsData, loading } = useSelector(
-    (state) => ({
-      threadsData: state.threads,
-      loading: state.threads.loading,
-    }),
-    shallowEqual,
-  );
-
-  const dispatch = useDispatch();
-
-  const fetchThreads = useCallback(
-    (page) => {
-      dispatch(requestThreads(page));
-    },
-    [dispatch],
-  );
-
-  useEffect(() => {
-    fetchThreads();
-  }, [fetchThreads]);
-
-  const getPageCount = (total, perPage) => {
-    return Math.ceil(total / perPage);
-  };
-
-  const handlePageChange = (page) => {
-    fetchThreads(page.selected + 1);
-  };
-  return (
-    <div>
-      {!loading && (
-        <HomeThreads
-          threads={threadsData.data}
-          handlePageChange={handlePageChange}
-          pageCount={getPageCount(threadsData.total, threadsData.per_page)}
-          currentPage={threadsData.current_page - 1}
-        />
-      )}
-      {loading && <Loader width="91px" height="93px" />}
+const ThreadForm = () => ((
+  <div className="modal fade" id="createThread" tabIndex={-1} role="dialog" aria-labelledby="createThreadLabel" aria-hidden="true">
+    <div className="modal-dialog" role="document">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title" id="createThreadLabel">Create Thread</h5>
+          <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div className="modal-body">
+          ...
+      </div>
+        <div className="modal-footer">
+          <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" className="btn btn-primary">Save changes</button>
+        </div>
+      </div>
     </div>
-  );
-}
-export default HomeContainer;
+  </div>
+
+))
+
+export default ThreadForm
