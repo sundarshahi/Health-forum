@@ -1,10 +1,10 @@
-import { combineReducers } from 'redux';
-import topicsReducer from './topics';
-import threadsReducer from './threads';
-import threadReducer from './thread';
-const reducer = combineReducers({
-    topics: topicsReducer,
-    threads: threadsReducer,
-    thread: threadReducer
-});
-export default reducer;
+import { RECEIVE_THREADS } from '../actions/threads';
+const threadsReducer = (state = { data: [] }, action) => {
+    switch (action.type) {
+    case RECEIVE_THREADS:
+        return action.payload;
+    default:
+        return state;
+    }
+};
+export default threadsReducer;
