@@ -1,12 +1,12 @@
-import React from 'react';
-
-const TopicsList = ({ topics }) => (
-  <ul className="list-group">
-    {topics?.map((topic) => (
-      <li key={topic.id} className="list-group-item">
-        {topic.name}
-      </li>
-    ))}
-  </ul>
-);
-export default TopicsList;
+export {
+    default as Home
+} from './Home';
+export {
+    default as Login
+} from './Login';
+export {
+    default as Thread
+} from './Thread';
+export {
+    default as Register
+} from './Register';
