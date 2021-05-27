@@ -1,54 +1,37 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Gravatar from 'react-gravatar';
 
-import Loader from '../../Loader';
-import SingleThread from './SingleThread';
-import { requestThread } from '../../../redux/actions/threads';
-import { requestReplies } from '../../../redux/actions/replies';
+const Thread = ({ thread }) => (
+  <div className="card mb-3">
+    <div className="card-header">
+      <Gravatar
+        email={thread.creator.email}
+        className="mr-3 rounded-circle"
+        width="30px"
+        height="30px"
+        alt=""
+      />
+      <span className="text-sm text-muted">
+        {thread.creator.name}, <b>3 hrs ago</b>
+      </span>
+      <Link
+        to={`/thread/${thread.id}`}
+        className="btn btn-outline-dark btn-xs float-right"
+      >
+        view thread
+      </Link>
+    </div>
+    <div className="card-body">
+      <h5 className="text-center">{thread.title}</h5>
+    </div>
+    <div className="card-footer text-muted">
+      <span>{thread.replies_count} replies</span>
+      <a href="##" className="btn btn-danger float-right btn-xs">
+        {thread.channel.name}
+      </a>
+    </div>
+  </div>
+);
 
-function ThreadContainer(props) {
-  const { thread, loading, replies } = useSelector(
-    (state) => ({
-      thread: state.thread.data,
-      loading: state.thread.loading,
-      loadingReplies: state.thread.loadingReplies,
-      replies: state.thread.replies,
-    }),
-    shallowEqual,
-  );
-
-  const dispatch = useDispatch();
-
-  useEffect((page) => {
-    const { id } = props.match.params;
-    dispatch(requestThread(id));
-    dispatch(requestReplies(id, page));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const getPageCount = (total, perPage) => {
-    return Math.ceil(total / perPage);
-  };
-
-  const handlePageChange = (page) => {
-    const { id } = props.match.params;
-    dispatch(requestReplies(id, page.selected + 1));
-  };
-
-  return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <SingleThread
-          thread={thread}
-          replies={replies}
-          getPageCount={getPageCount}
-          handlePageChange={handlePageChange}
-        />
-      )}
-    </>
-  );
-}
-
-export default ThreadContainer;
+export default Thread;
