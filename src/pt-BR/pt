@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-const TopicsList = ({ topics }) => (
-  <ul className="list-group">
-    {topics?.map((topic) => (
-      <li key={topic.id} className="list-group-item">
-        {topic.name}
-      </li>
-    ))}
-  </ul>
-);
-export default TopicsList;
+import Loader from '../Loader';
+import TopicsList from './TopicsList';
+import { requestTopics } from '../../redux/actions/topics';
+
+function TopicsContainer() {
+  const { topics, loading } = useSelector(
+    (state) => ({
+      topics: state.topics.data,
+      loading: state.topics.loading,
+    }),
+    shallowEqual,
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(requestTopics());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div>
+      {!loading && <TopicsList topics={topics} />}
+      {loading && <Loader />}
+    </div>
+  );
+}
+
+export default TopicsContainer;
