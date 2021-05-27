@@ -1,57 +1,54 @@
-import React from 'react';
-import Gravatar from 'react-gravatar';
-import ReactPaginate from 'react-paginate';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
-import Reply from '../../../Reply';
+import Loader from '../../Loader';
+import SingleThread from './SingleThread';
+import { requestThread } from '../../../redux/actions/threads';
+import { requestReplies } from '../../../redux/actions/replies';
 
-const SingleThread = ({ thread, replies, handlePageChange, getPageCount }) => (
-  <>
-    <div className="card mb-3">
-      <div className="card-header">
-        <Gravatar
-          email={thread.creator.email}
-          className="mr-3 rounded-circle"
-          width="30px"
-          height="30px"
-          alt=""
+function ThreadContainer(props) {
+  const { thread, loading, replies } = useSelector(
+    (state) => ({
+      thread: state.thread.data,
+      loading: state.thread.loading,
+      loadingReplies: state.thread.loadingReplies,
+      replies: state.thread.replies,
+    }),
+    shallowEqual,
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect((page) => {
+    const { id } = props.match.params;
+    dispatch(requestThread(id));
+    dispatch(requestReplies(id, page));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getPageCount = (total, perPage) => {
+    return Math.ceil(total / perPage);
+  };
+
+  const handlePageChange = (page) => {
+    const { id } = props.match.params;
+    dispatch(requestReplies(id, page.selected + 1));
+  };
+
+  return (
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <SingleThread
+          thread={thread}
+          replies={replies}
+          getPageCount={getPageCount}
+          handlePageChange={handlePageChange}
         />
-        <span className="text-sm text-muted">
-          {thread.creator.name}, <b>3 hrs ago</b>
-        </span>
-      </div>
-      <div className="card-body">
-        <h5 className="text-center">{thread.title}</h5>
-        <p className="text-center">{thread.body}</p>
-      </div>
-      <div className="card-footer text-muted">
-        <span>{thread.replies_count} replies</span>
-        <a href="##" className="btn btn-danger float-right btn-xs">
-          {thread.channel.name}
-        </a>
-      </div>
-    </div>
+      )}
+    </>
+  );
+}
 
-    <div className="container">
-      {replies.data.map((reply) => (
-        <Reply key={reply.id} reply={reply} />
-      ))}
-      <ReactPaginate
-        containerClassName="pagination"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        activeClassName="active"
-        previousClassName="page-item"
-        nextClassName="page-item"
-        previousLinkClassName="page-link"
-        nextLinkClassName="page-link"
-        disabledClassName="disabled"
-        breakClassName="page-link"
-        onPageChange={handlePageChange}
-        pageCount={getPageCount(replies.total, replies.per_page)}
-        forcePage={replies.current_page - 1}
-      />
-    </div>
-  </>
-);
-
-export default SingleThread;
+export default ThreadContainer;
